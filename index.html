@@ -1,167 +1,363 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Para ti 💖</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: #fddde6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Caja de regalo */
-    .gift {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      background: pink;
-      border: 4px solid #d6336c;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: transform 0.5s ease;
-      z-index: 10;
-    }
-    .gift:hover {
-      transform: scale(1.05);
-    }
-
-    /* Tapa */
-    .lid {
-      position: absolute;
-      top: -40px;
-      left: -4px;
-      width: 200px;
-      height: 60px;
-      background: #ff4d6d;
-      border: 4px solid #d6336c;
-      border-radius: 10px 10px 0 0;
-      transition: transform 1s ease;
-      transform-origin: bottom left;
-    }
-    .gift-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      font-weight: bold;
-      color: #d6336c;
-    }
-    .open .lid {
-      transform: rotate(-120deg);
-    }
-
-    /* Escena parallax */
-    .parallax-scene {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      display: none;
-    }
-
-    .layer {
-      position: absolute;
-      width: 110%;
-      height: 110%;
-      top: 0;
-      left: 0;
-      will-change: transform;
-    }
-
-    .layer.bg {
-      background: linear-gradient(to top, #ffdde1, #ee9ca7);
-      z-index: 1;
-    }
-
-    .layer.hearts {
-      background-image: url('https://i.ibb.co/NmSP3jM/heart.png'); /* ❤️ PNG transparente */
-      background-repeat: repeat;
-      background-size: 80px;
-      animation: float 8s linear infinite;
-      opacity: 0.4;
-      z-index: 2;
-    }
-
-    @keyframes float {
-      from { background-position: 0 0; }
-      to { background-position: 0 100vh; }
-    }
-
-    .layer.content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 3;
-    }
-
-    .layer.content img {
-      max-width: 300px;
-      border-radius: 20px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      color: white;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
-      margin-bottom: 15px;
-    }
-
-    iframe {
-      border-radius: 12px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Vidita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #ffe8e8 0%, #f8d6ff 100%);
+            color: #5a3e5c;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Estilos del encabezado */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .heart-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Cpath d='M25,39.7L12.5,27.3c-4.6-4.4-4.6-11.5,0-15.9c4.5-4.4,11.7-4.4,16.2,0l1.3,1.2l1.3-1.2c4.5-4.4,11.7-4.4,16.2,0c4.6,4.4,4.6,11.5,0,15.9L25,39.7z' fill='%23ff3366'/%3E%3C/svg%3E");
+            z-index: -1;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d64d7e;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Estilos de la sección de mensaje */
+        .love-letter {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(149, 66, 146, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .love-letter:hover {
+            transform: translateY(-5px);
+        }
+        
+        .love-letter::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff9ecb, #d64d7e, #9a4ea6);
+        }
+        
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            line-height: 1.8;
+            color: #5a3e5c;
+            text-align: center;
+        }
+        
+        /* Estilos del contador de días */
+        .counter {
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(149, 66, 146, 0.1);
+        }
+        
+        .counter h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #d64d7e;
+            margin-bottom: 15px;
+        }
+        
+        .days-together {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #9a4ea6;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Estilos de la galería */
+        .gallery {
+            padding: 40px 0;
+        }
+        
+        .gallery h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #d64d7e;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 250px;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Estilos del reproductor de música */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 10px 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .play-btn {
+            background: linear-gradient(to right, #ff9ecb, #d64d7e);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .music-info {
+            font-size: 0.9rem;
+            color: #5a3e5c;
+        }
+        
+        /* Estilos del footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #9a4ea6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .letter-content {
+                font-size: 1.5rem;
+            }
+            
+            .days-together {
+                font-size: 2.5rem;
+            }
+            
+            .photos {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Caja de regalo -->
-  <div class="gift" id="giftBox">
-    <div class="lid"></div>
-    <div class="gift-text">🎁</div>
-  </div>
-
-  <!-- Escena Parallax -->
-  <div class="parallax-scene" id="scene">
-    <div class="layer bg" data-speed="2"></div>
-    <div class="layer hearts" data-speed="4"></div>
-    <div class="layer content" data-speed="8">
-      <h2>💖 Para nosotros 💖</h2>
-      <img src="fotito.jpg" alt="Nuestra foto">
-      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3H9GcHKKJyZ9TEOLKlJ1U5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="heart-bg"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Para Mi Amor</h1>
+            <p>Cada día a tu lado es un regalo del destino</p>
+        </header>
+        
+        <section class="love-letter">
+            <!-- 
+                PARA PERSONALIZAR EL MENSAJE DE AMOR:
+                Reemplaza el texto dentro del div class="letter-content" con tu propio mensaje
+            -->
+            <div class="letter-content">
+                Mi querida amor,<br><br>
+                
+                Desde que llegaste a mi vida, cada día tiene más color, cada momento tiene más sentido. 
+                Eres la razón por la que mi corazón late con fuerza cada mañana y por la que sonrío sin motivo alguno.<br><br>
+                
+                Esta página es un pequeño reflejo de lo que siento por ti, de todos los momentos especiales que hemos compartido 
+                y de los muchos que nos quedan por vivir juntos.<br><br>
+                
+                Te amo más de lo que las palabras pueden expresar.<br><br>
+                
+                Por siempre tuyo/a.
+            </div>
+        </section>
+        
+        <section class="counter">
+            <h2>Nuestro Tiempo Juntos</h2>
+            <div class="days-together" id="daysTogether">0 días</div>
+            <p>y contando...</p>
+        </section>
+        
+        <section class="gallery">
+            <h2>Nuestros Momentos</h2>
+            <div class="photos">
+                <!-- 
+                    PARA PERSONALIZAR LAS IMÁGENES:
+                    Reemplaza las URLs en src="..." con las URLs de tus propias imágenes
+                    Puedes agregar o eliminar elementos div class="photo-item" según necesites
+                -->
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/ffe8e8/d64d7e?text=Nuestra+Primera+Cita" alt="Nuestro momento especial">
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/f8d6ff/9a4ea6?text=Viaje+Inolvidable" alt="Nuestro momento especial">
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/ffd1dc/5a3e5c?text=Momentos+Especiales" alt="Nuestro momento especial">
+                </div>
+                <div class="photo-item">
+                    <img src="https://placehold.co/600x400/e6e6fa/d64d7e?text=Risas+y+Alegría" alt="Nuestro momento especial">
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
+    
+    <div class="music-player">
+        <div class="music-controls">
+            <button class="play-btn" id="playButton">▶</button>
+        </div>
+        <div class="music-info">Canción: Tu canción especial</div>
+    </div>
+    
+    <footer>
+        <p>Hecho con ❤️ para ti - Para siempre</p>
+    </footer>
 
-  <script>
-    const giftBox = document.getElementById("giftBox");
-    const scene = document.getElementById("scene");
-
-    giftBox.addEventListener("click", () => {
-      giftBox.classList.add("open");
-      setTimeout(() => {
-        giftBox.style.display = "none";
-        scene.style.display = "block";
-      }, 1000);
-    });
-
-    // Parallax con el mouse
-    document.addEventListener("mousemove", (e) => {
-      const x = (window.innerWidth / 2 - e.pageX) / 50;
-      const y = (window.innerHeight / 2 - e.pageY) / 50;
-
-      document.querySelectorAll(".layer").forEach(layer => {
-        const speed = layer.getAttribute("data-speed");
-        layer.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-      });
-    });
-  </script>
+    <script>
+        // CÓDIGO PARA EL CONTADOR DE DÍAS
+        // PARA CONFIGURAR LA FECHA: 
+        // Reemplaza new Date("2022-07-15") con tu fecha en formato AÑO-MES-DÍA
+        const startDate = new Date("2024-06-16");
+        
+        function updateDayCounter() {
+            const today = new Date();
+            const timeDiff = today - startDate;
+            const daysTogether = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            
+            document.getElementById("daysTogether").textContent = `${daysTogether} días`;
+        }
+        
+        // CÓDIGO PARA LA MÚSICA DE FONDO
+        // PARA CAMBIAR LA CANCIÓN:
+        // Reemplaza "assets/nuestra-cancion.mp3" con la ruta a tu archivo de música
+        const audio = new Audio("assets/nuestra-cancion.mp3");
+        audio.loop = true;
+        
+        const playButton = document.getElementById("playButton");
+        let isPlaying = false;
+        
+        playButton.addEventListener("click", function() {
+            if (isPlaying) {
+                audio.pause();
+                playButton.innerHTML = "▶";
+            } else {
+                audio.play().catch(error => {
+                    console.log("La reproducción automática fue prevenida: ", error);
+                    // Si la reproducción automática es bloqueada, solicitamos interacción del usuario
+                    alert("Por favor haz clic en el botón de play para reproducir la música.");
+                });
+                playButton.innerHTML = "❚❚";
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // Intentar reproducir automáticamente al cargar la página
+        window.addEventListener("load", function() {
+            updateDayCounter();
+            
+            // Intentar reproducción automática con gesto del usuario
+            document.body.addEventListener("click", function() {
+                if (!isPlaying) {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        playButton.innerHTML = "❚❚";
+                    }).catch(error => {
+                        console.log("Reproducción automática prevenida: ", error);
+                    });
+                }
+            }, { once: true }); // Solo una vez
+        });
+    </script>
 </body>
 </html>
