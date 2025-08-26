@@ -1,363 +1,510 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Vidita</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(135deg, #ffe8e8 0%, #f8d6ff 100%);
-            color: #5a3e5c;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Estilos del encabezado */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            position: relative;
-        }
-        
-        .heart-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Cpath d='M25,39.7L12.5,27.3c-4.6-4.4-4.6-11.5,0-15.9c4.5-4.4,11.7-4.4,16.2,0l1.3,1.2l1.3-1.2c4.5-4.4,11.7-4.4,16.2,0c4.6,4.4,4.6,11.5,0,15.9L25,39.7z' fill='%23ff3366'/%3E%3C/svg%3E");
-            z-index: -1;
-        }
-        
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: #d64d7e;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Estilos de la sección de mensaje */
-        .love-letter {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 8px 32px rgba(149, 66, 146, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .love-letter:hover {
-            transform: translateY(-5px);
-        }
-        
-        .love-letter::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, #ff9ecb, #d64d7e, #9a4ea6);
-        }
-        
-        .letter-content {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            line-height: 1.8;
-            color: #5a3e5c;
-            text-align: center;
-        }
-        
-        /* Estilos del contador de días */
-        .counter {
-            text-align: center;
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 15px;
-            margin: 30px 0;
-            box-shadow: 0 8px 32px rgba(149, 66, 146, 0.1);
-        }
-        
-        .counter h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #d64d7e;
-            margin-bottom: 15px;
-        }
-        
-        .days-together {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #9a4ea6;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Estilos de la galería */
-        .gallery {
-            padding: 40px 0;
-        }
-        
-        .gallery h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #d64d7e;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .photos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .photo-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 250px;
-        }
-        
-        .photo-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .photo-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        /* Estilos del reproductor de música */
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50px;
-            padding: 10px 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-        }
-        
-        .music-controls {
-            display: flex;
-            align-items: center;
-        }
-        
-        .play-btn {
-            background: linear-gradient(to right, #ff9ecb, #d64d7e);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-            transition: transform 0.3s ease;
-        }
-        
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .music-info {
-            font-size: 0.9rem;
-            color: #5a3e5c;
-        }
-        
-        /* Estilos del footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            color: #9a4ea6;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .letter-content {
-                font-size: 1.5rem;
-            }
-            
-            .days-together {
-                font-size: 2.5rem;
-            }
-            
-            .photos {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para ti — Un detalle</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Estilos: todo en un lugar para facilitar deploy -->
+  <style>
+    :root{
+      --bg1:#fff1f5;
+      --bg2:#fbe8f0;
+      --accent:#d96b8f;
+      --accent-2:#9a7fbf;
+      --beige:#f6efe9;
+      --card-shadow: 0 8px 24px rgba(169,100,140,0.12);
+      --radius:16px;
+      --glass: rgba(255,255,255,0.55);
+      --text:#3b2b2b;
+      --muted:#6a5a5a;
+    }
+
+    /* Fondo con degradado y patrón de corazones sutil */
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% 20%, rgba(154,127,191,0.07), transparent 8%),
+                  radial-gradient(1200px 600px at 90% 80%, rgba(217,107,143,0.06), transparent 6%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+    }
+
+    .page {
+      width:100%;
+      max-width:1000px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.82));
+      border-radius:24px;
+      box-shadow: var(--card-shadow);
+      padding:28px;
+      backdrop-filter: blur(6px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* borde decorativo de corazones usando pseudo-elemento */
+    .page::before{
+      content:"";
+      position:absolute;
+      inset: -40%;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(217,107,143,0.04) 0 8%, transparent 8%),
+        radial-gradient(circle at 80% 60%, rgba(154,127,191,0.03) 0 7%, transparent 7%);
+      transform: rotate(8deg);
+      z-index:0;
+    }
+
+    header{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .logo {
+      width:70px;
+      height:70px;
+      border-radius:14px;
+      background: linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-family: "Dancing Script", cursive;
+      font-size:28px;
+      box-shadow:0 6px 18px rgba(149,86,119,0.18);
+      flex-shrink:0;
+    }
+
+    h1{
+      font-family: "Dancing Script", cursive;
+      font-size:36px;
+      margin:0;
+      color: #7b2f4a;
+      letter-spacing:0.6px;
+    }
+    p.lead{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:20px;
+      margin-top:20px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Carta romántica - estilo manuscrito */
+    .card-letter{
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,250,250,0.9));
+      border-radius:16px;
+      padding:22px;
+      box-shadow: 0 6px 18px rgba(108,70,90,0.06);
+      font-size:16px;
+      line-height:1.6;
+      color:var(--text);
+      border-left:6px solid rgba(217,107,143,0.14);
+    }
+
+    .letter-title{
+      font-family:"Dancing Script", cursive;
+      font-size:28px;
+      margin-bottom:8px;
+      color:#663a4b;
+    }
+
+    .handwritten{
+      font-family:"Dancing Script", cursive;
+      font-size:18px;
+      color:#5b3a46;
+      background: linear-gradient(90deg, transparent 0, transparent 60%, rgba(230,210,220,0.25) 60%);
+      padding:14px;
+      border-radius:12px;
+    }
+
+    /* Contador */
+    .counter {
+      margin-top:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .counter .days{
+      background:var(--beige);
+      padding:12px 16px;
+      border-radius:12px;
+      font-weight:600;
+      font-size:20px;
+      box-shadow: 0 6px 16px rgba(150,90,120,0.06);
+    }
+    .counter small{ color:var(--muted); }
+
+    /* Right column: controls y galería */
+    .sidebar{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    /* Player */
+    .player{
+      background:var(--glass);
+      border-radius:12px;
+      padding:12px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 6px 16px rgba(130,80,110,0.04);
+    }
+    .player .controls{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .btn {
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+      border:1px solid rgba(120,70,100,0.06);
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease;
+      font-weight:600;
+      font-size:14px;
+    }
+    .btn:active{ transform:translateY(1px) }
+    .btn:hover{ box-shadow: 0 8px 20px rgba(140,70,120,0.08) }
+
+    /* Galería */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:10px;
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .gallery img{
+      width:100%;
+      height:170px;
+      object-fit:cover;
+      display:block;
+      transition:transform .6s cubic-bezier(.2,.8,.2,1), filter .24s;
+      cursor:pointer;
+    }
+    .gallery img:hover{
+      transform: scale(1.03) rotate(-0.8deg);
+      filter:brightness(1.03);
+    }
+
+    /* Modal de imagen */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(11,6,8,0.6);
+      z-index:9999;
+      padding:24px;
+    }
+    .modal.open{ display:flex; }
+    .modal img{
+      max-width:100%;
+      max-height:90vh;
+      border-radius:12px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+
+    footer{
+      margin-top:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+      z-index:1;
+    }
+
+    /* Responsivo */
+    @media (max-width:920px){
+      .grid{ grid-template-columns: 1fr; }
+      .sidebar{ order:2 }
+    }
+  </style>
 </head>
 <body>
-    <div class="heart-bg"></div>
-    
-    <div class="container">
-        <header>
-            <h1>Para Mi Amor</h1>
-            <p>Cada día a tu lado es un regalo del destino</p>
-        </header>
-        
-        <section class="love-letter">
-            <!-- 
-                PARA PERSONALIZAR EL MENSAJE DE AMOR:
-                Reemplaza el texto dentro del div class="letter-content" con tu propio mensaje
-            -->
-            <div class="letter-content">
-                Mi querida amor,<br><br>
-                
-                Desde que llegaste a mi vida, cada día tiene más color, cada momento tiene más sentido. 
-                Eres la razón por la que mi corazón late con fuerza cada mañana y por la que sonrío sin motivo alguno.<br><br>
-                
-                Esta página es un pequeño reflejo de lo que siento por ti, de todos los momentos especiales que hemos compartido 
-                y de los muchos que nos quedan por vivir juntos.<br><br>
-                
-                Te amo más de lo que las palabras pueden expresar.<br><br>
-                
-                Por siempre tuyo/a.
-            </div>
-        </section>
-        
-        <section class="counter">
-            <h2>Nuestro Tiempo Juntos</h2>
-            <div class="days-together" id="daysTogether">0 días</div>
-            <p>y contando...</p>
-        </section>
-        
-        <section class="gallery">
-            <h2>Nuestros Momentos</h2>
-            <div class="photos">
-                <!-- 
-                    PARA PERSONALIZAR LAS IMÁGENES:
-                    Reemplaza las URLs en src="..." con las URLs de tus propias imágenes
-                    Puedes agregar o eliminar elementos div class="photo-item" según necesites
-                -->
-                <div class="photo-item">
-                    <img src="https://placehold.co/600x400/ffe8e8/d64d7e?text=Nuestra+Primera+Cita" alt="Nuestro momento especial">
-                </div>
-                <div class="photo-item">
-                    <img src="https://placehold.co/600x400/f8d6ff/9a4ea6?text=Viaje+Inolvidable" alt="Nuestro momento especial">
-                </div>
-                <div class="photo-item">
-                    <img src="https://placehold.co/600x400/ffd1dc/5a3e5c?text=Momentos+Especiales" alt="Nuestro momento especial">
-                </div>
-                <div class="photo-item">
-                    <img src="https://placehold.co/600x400/e6e6fa/d64d7e?text=Risas+y+Alegría" alt="Nuestro momento especial">
-                </div>
-            </div>
-        </section>
-    </div>
-    
-    <div class="music-player">
-        <div class="music-controls">
-            <button class="play-btn" id="playButton">▶</button>
-        </div>
-        <div class="music-info">Canción: Tu canción especial</div>
-    </div>
-    
-    <footer>
-        <p>Hecho con ❤️ para ti - Para siempre</p>
-    </footer>
+  <div class="page" role="main" aria-label="Página romántica para tu pareja">
+    <header>
+      <div class="logo" aria-hidden="true">♥</div>
+      <div>
+        <h1>Para ti</h1>
+        <p class="lead">Un detalle hecho con cariño</p>
+      </div>
+    </header>
 
-    <script>
-        // CÓDIGO PARA EL CONTADOR DE DÍAS
-        // PARA CONFIGURAR LA FECHA: 
-        // Reemplaza new Date("2022-07-15") con tu fecha en formato AÑO-MES-DÍA
-        const startDate = new Date("2024-06-16");
-        
-        function updateDayCounter() {
-            const today = new Date();
-            const timeDiff = today - startDate;
-            const daysTogether = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            
-            document.getElementById("daysTogether").textContent = `${daysTogether} días`;
-        }
-        
-        // CÓDIGO PARA LA MÚSICA DE FONDO
-        // PARA CAMBIAR LA CANCIÓN:
-        // Reemplaza "assets/nuestra-cancion.mp3" con la ruta a tu archivo de música
-        const audio = new Audio("assets/nuestra-cancion.mp3");
-        audio.loop = true;
-        
-        const playButton = document.getElementById("playButton");
-        let isPlaying = false;
-        
-        playButton.addEventListener("click", function() {
-            if (isPlaying) {
-                audio.pause();
-                playButton.innerHTML = "▶";
-            } else {
-                audio.play().catch(error => {
-                    console.log("La reproducción automática fue prevenida: ", error);
-                    // Si la reproducción automática es bloqueada, solicitamos interacción del usuario
-                    alert("Por favor haz clic en el botón de play para reproducir la música.");
-                });
-                playButton.innerHTML = "❚❚";
-            }
-            isPlaying = !isPlaying;
-        });
-        
-        // Intentar reproducir automáticamente al cargar la página
-        window.addEventListener("load", function() {
-            updateDayCounter();
-            
-            // Intentar reproducción automática con gesto del usuario
-            document.body.addEventListener("click", function() {
-                if (!isPlaying) {
-                    audio.play().then(() => {
-                        isPlaying = true;
-                        playButton.innerHTML = "❚❚";
-                    }).catch(error => {
-                        console.log("Reproducción automática prevenida: ", error);
-                    });
-                }
-            }, { once: true }); // Solo una vez
-        });
-    </script>
+    <div class="grid">
+      <!-- Columna principal: carta -->
+      <div>
+        <section class="card-letter" aria-labelledby="letter-title">
+          <h2 id="letter-title" class="letter-title">Mi amor,</h2>
+
+          <!--
+            >> Aquí cambia el texto del mensaje de amor.
+            Reemplaza el contenido dentro del <div class="handwritten"> por tu carta.
+          -->
+          <div class="handwritten" id="love-message">
+            <!-- Mensaje de ejemplo -->
+            Cada día a tu lado se siente como si el mundo se ralentizara solo para mostrarnos
+            cuánto caben las pequeñas cosas: una risa, una caminata bajo la lluvia, una mirada.
+            Gracias por ser mi calma y mi locura — por hacerme mejor cada día. Te quiero con todo.
+          </div>
+
+          <!-- Contador de días juntos -->
+          <div class="counter" aria-live="polite">
+            <div>
+              <small>Juntos desde</small>
+              <div id="since-date" style="font-weight:600; color:#6a3c4a;">15/07/2022</div>
+            </div>
+            <div class="days" id="days-count" title="Días juntos">📅 0 días</div>
+          </div>
+
+        </section>
+
+        <!-- Espacio para otra nota o dedicatoria -->
+        <section style="margin-top:14px;">
+          <div class="card-letter" style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="flex:1">
+              <strong>Pequeña dedicatoria:</strong>
+              <p style="margin:8px 0 0 0;color:var(--muted);font-size:14px;">
+                Aquí puedes agregar enlaces a playlists, planes futuros, o una lista de recuerdos importantes.
+              </p>
+            </div>
+            <div style="font-size:22px; color:rgba(150,55,95,0.9);">✨</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar: player + galería -->
+      <aside class="sidebar" aria-label="Reproductor y galería">
+        <!-- Player -->
+        <div class="player" role="region" aria-label="Reproductor de música">
+          <div>
+            <div style="font-weight:700;">Música romántica</div>
+            <div style="font-size:13px;color:var(--muted);">Se intentará reproducir automáticamente</div>
+          </div>
+          <div class="controls">
+            <button class="btn" id="play-toggle" aria-pressed="false">Reproducir</button>
+            <button class="btn" id="mute-toggle" aria-pressed="false">Silenciar</button>
+          </div>
+        </div>
+
+        <!-- Galería -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <strong>Galería</strong>
+            <small style="color:var(--muted)">Haz clic para agrandar</small>
+          </div>
+
+          <!--
+            >> Aquí cambia las rutas de las imágenes de la galería.
+            Añade/quita <img> con las rutas que quieras, por ejemplo:
+            /assets/images/1.jpg, /assets/images/2.jpg, ...
+          -->
+          <div class="gallery" id="gallery">
+            <img src="/assets/images/1.jpg" alt="Foto pareja 1" loading="lazy" data-full="/assets/images/1.jpg">
+            <img src="/assets/images/2.jpg" alt="Foto pareja 2" loading="lazy" data-full="/assets/images/2.jpg">
+            <img src="/assets/images/3.jpg" alt="Foto pareja 3" loading="lazy" data-full="/assets/images/3.jpg">
+            <img src="/assets/images/4.jpg" alt="Foto pareja 4" loading="lazy" data-full="/assets/images/4.jpg">
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>Hecho con ♥ — Personaliza el contenido en <code>index.html</code></div>
+      <div style="font-size:13px;color:var(--muted)">Tip: agrega tus imágenes en <code>/assets/images/</code></div>
+    </footer>
+  </div>
+
+  <!-- Modal para ver imagen grande -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+    <img id="modal-img" src="" alt="Imagen ampliada">
+  </div>
+
+  <!-- Audio: reemplaza la ruta en el atributo src si cambias el archivo -->
+  <!--
+    >> Dónde cambiar el archivo de música:
+    Reemplaza "/assets/music/romantica.mp3" por la ruta de tu archivo (p. ej. "/assets/music/mi-cancion.mp3").
+    Nota: muchos navegadores bloquean autoplay con sonido. Tenemos controles para reproducir manualmente si hace falta.
+  -->
+  <audio id="bg-audio" src="/assets/music/romantica.mp3" loop preload="auto"></audio>
+
+  <!-- JavaScript: funcionalidad del contador, player y galería -->
+  <script>
+    /* ===========================
+       CONFIGURACIONES - cámbialas aquí
+       ===========================
+    */
+    // Fecha de inicio (formato YYYY-MM-DD). Cambia aquí la fecha desde la que cuentan los días.
+    // Ejemplo: const relationshipDate = '2022-07-15';
+    const relationshipDate = '2024-06-16';
+
+    // Texto del mensaje de amor: si quieres modificarlo desde JS en vez de HTML,
+    // puedes asignar aquí una cadena. Si deseas editar directamente en el HTML,
+    // cambia el <div id="love-message">....</div>.
+    // const customMessage = "Tu mensaje aquí...";
+
+    // Rutas de las imágenes de la galería (opcional: puedes mantener las <img> ya en el HTML).
+    // const galleryImages = ['/assets/images/1.jpg','/assets/images/2.jpg',...];
+
+    // Ruta del archivo de audio (si prefieres cambiarlo desde JS)
+    // const audioSrc = '/assets/music/romantica.mp3';
+
+    /* ===========================
+       CÓDIGO - no es necesario modificar
+       =========================== */
+
+    // --- Contador de días juntos ---
+    function calculateDaysSince(dateString){
+      const start = new Date(dateString + 'T00:00:00'); // asegurar formato ISO
+      const now = new Date();
+      // diferencia en ms
+      const diff = now - start;
+      // convertir a días completos
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      return days;
+    }
+
+    function updateDays(){
+      const daysEl = document.getElementById('days-count');
+      const sinceEl = document.getElementById('since-date');
+      // Mostrar la fecha en formato dd/mm/yyyy
+      const parts = relationshipDate.split('-');
+      if(parts.length === 3){
+        const [y,m,d] = parts;
+        sinceEl.textContent = `${d}/${m}/${y}`;
+      } else {
+        sinceEl.textContent = relationshipDate;
+      }
+      const days = calculateDaysSince(relationshipDate);
+      daysEl.textContent = `📅 ${days.toLocaleString('es-ES')} días`;
+    }
+
+    // Ejecutar al cargar
+    updateDays();
+
+    // --- Player ---
+    const audio = document.getElementById('bg-audio');
+    const playBtn = document.getElementById('play-toggle');
+    const muteBtn = document.getElementById('mute-toggle');
+
+    // Intentar autoplay (puede fallar por políticas del navegador)
+    function tryAutoplay(){
+      audio.play().then(()=> {
+        // autoplay tuvo éxito
+        playBtn.textContent = 'Pausar';
+        playBtn.setAttribute('aria-pressed','true');
+      }).catch((err)=>{
+        // autoplay bloqueado; dejamos el botón en "Reproducir"
+        playBtn.textContent = 'Reproducir';
+        playBtn.setAttribute('aria-pressed','false');
+        // console.log('Autoplay bloqueado:', err);
+      });
+    }
+
+    // Intentamos autoplay 600ms después—esto a veces mejora la compatibilidad en móviles.
+    window.setTimeout(tryAutoplay, 600);
+
+    playBtn.addEventListener('click', ()=>{
+      if(audio.paused){
+        audio.play();
+        playBtn.textContent = 'Pausar';
+        playBtn.setAttribute('aria-pressed','true');
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Reproducir';
+        playBtn.setAttribute('aria-pressed','false');
+      }
+    });
+
+    muteBtn.addEventListener('click', ()=>{
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? 'Silenciado' : 'Silenciar';
+      muteBtn.setAttribute('aria-pressed', String(audio.muted));
+    });
+
+    // --- Galería: click para modal ---
+    const gallery = document.getElementById('gallery');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    gallery.addEventListener('click', (e)=>{
+      const target = e.target;
+      if(target.tagName === 'IMG'){
+        const full = target.dataset.full || target.src;
+        modalImg.src = full;
+        modal.classList.add('open');
+        // pausar música para no distraer (opcional)
+        // audio.pause();
+      }
+    });
+
+    modal.addEventListener('click', (e)=>{
+      if(e.target === modal || e.target === modalImg){
+        modal.classList.remove('open');
+        modalImg.src = '';
+      }
+    });
+
+    // Cerrar modal con Esc
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && modal.classList.contains('open')){
+        modal.classList.remove('open');
+        modalImg.src = '';
+      }
+    });
+
+    // Accessibility: si el audio se reproduce, reflect state en botones
+    audio.addEventListener('play', ()=> {
+      playBtn.textContent = 'Pausar';
+      playBtn.setAttribute('aria-pressed','true');
+    });
+    audio.addEventListener('pause', ()=> {
+      playBtn.textContent = 'Reproducir';
+      playBtn.setAttribute('aria-pressed','false');
+    });
+
+    /* Opcional: actualizar contador diariamente a medianoche */
+    // Calcula ms hasta próxima medianoche y programa updateDays
+    (function scheduleDailyUpdate(){
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(now.getDate()+1);
+      tomorrow.setHours(0,0,5,0); // 5 segundos después de medianoche
+      const ms = tomorrow - now;
+      setTimeout(function(){
+        updateDays();
+        // luego cada 24h
+        setInterval(updateDays, 24*60*60*1000);
+      }, ms);
+    })();
+
+  </script>
 </body>
 </html>
