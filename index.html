@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para ti 💖</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #fddde6;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Caja de regalo */
+    .gift {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background: pink;
+      border: 4px solid #d6336c;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.5s ease;
+      z-index: 2;
+    }
+    .gift:hover {
+      transform: scale(1.05);
+    }
+
+    /* Tapa de la caja */
+    .lid {
+      position: absolute;
+      top: -40px;
+      left: -4px;
+      width: 200px;
+      height: 60px;
+      background: #ff4d6d;
+      border: 4px solid #d6336c;
+      border-radius: 10px 10px 0 0;
+      transition: transform 1s ease;
+      transform-origin: bottom left;
+    }
+
+    /* Texto en la caja */
+    .gift-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #d6336c;
+    }
+
+    /* Contenido oculto */
+    .hidden-content {
+      display: none;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+      z-index: 1;
+    }
+    .hidden-content img {
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+    iframe {
+      border-radius: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Clase cuando la tapa se abre */
+    .open .lid {
+      transform: rotate(-120deg);
+    }
+
+    /* Confeti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      top: -10px;
+      animation: fall 3s linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Caja de regalo -->
+  <div class="gift" id="giftBox">
+    <div class="lid"></div>
+    <div class="gift-text">🎁</div>
+  </div>
+
+  <!-- Contenido oculto -->
+  <div class="hidden-content" id="content">
+    <h2>💖 Para nosotros 💖</h2>
+    <img src="tu-foto.jpg" alt="Nuestra foto">
+    <!-- Spotify -->
+    <iframe id="spotifyPlayer" style="border-radius:12px" 
+      src="https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC?utm_source=generator" 
+      width="300" height="80" frameborder="0" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+  </div>
+
+  <script>
+    const giftBox = document.getElementById("giftBox");
+    const content = document.getElementById("content");
+
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        document.body.appendChild(confetti);
+
+        // posición aleatoria
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+        // eliminar confeti después de la animación
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    giftBox.addEventListener("click", () => {
+      giftBox.classList.add("open"); // Anima la tapa
+      createConfetti(); // suelta el confeti 🎉
+      setTimeout(() => {
+        giftBox.style.display = "none";   // Oculta la caja después de la animación
+        content.style.display = "block";  // Muestra la foto y Spotify
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
