@@ -65,18 +65,16 @@
       width: 100%;
       height: 100vh;
       overflow: hidden;
-      perspective: 1px;
       display: none;
     }
 
     .layer {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: cover;
+      width: 110%;
+      height: 110%;
       top: 0;
       left: 0;
+      will-change: transform;
     }
 
     .layer.bg {
@@ -86,9 +84,10 @@
 
     .layer.hearts {
       background-image: url('https://i.ibb.co/NmSP3jM/heart.png'); /* ❤️ PNG transparente */
+      background-repeat: repeat;
       background-size: 80px;
-      animation: float 6s linear infinite;
-      opacity: 0.3;
+      animation: float 8s linear infinite;
+      opacity: 0.4;
       z-index: 2;
     }
 
@@ -132,148 +131,9 @@
 
   <!-- Escena Parallax -->
   <div class="parallax-scene" id="scene">
-    <div class="layer bg" data-speed="0.2"></div>
-    <div class="layer hearts" data-speed="0.5"></div>
-    <div class="layer content" data-speed="1">
-      <h2>💖 Para nosotros 💖</h2>
-      <img src="fotito.jpg" alt="Nuestra foto">
-      <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Para ti 💖</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: #fddde6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Caja de regalo */
-    .gift {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      background: pink;
-      border: 4px solid #d6336c;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: transform 0.5s ease;
-      z-index: 10;
-    }
-    .gift:hover {
-      transform: scale(1.05);
-    }
-
-    /* Tapa */
-    .lid {
-      position: absolute;
-      top: -40px;
-      left: -4px;
-      width: 200px;
-      height: 60px;
-      background: #ff4d6d;
-      border: 4px solid #d6336c;
-      border-radius: 10px 10px 0 0;
-      transition: transform 1s ease;
-      transform-origin: bottom left;
-    }
-    .gift-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      font-weight: bold;
-      color: #d6336c;
-    }
-    .open .lid {
-      transform: rotate(-120deg);
-    }
-
-    /* Escena parallax */
-    .parallax-scene {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      perspective: 1px;
-      display: none;
-    }
-
-    .layer {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      top: 0;
-      left: 0;
-    }
-
-    .layer.bg {
-      background: linear-gradient(to top, #ffdde1, #ee9ca7);
-      z-index: 1;
-    }
-
-    .layer.hearts {
-      background-image: url('https://i.ibb.co/NmSP3jM/heart.png'); /* ❤️ PNG transparente */
-      background-size: 80px;
-      animation: float 6s linear infinite;
-      opacity: 0.3;
-      z-index: 2;
-    }
-
-    @keyframes float {
-      from { background-position: 0 0; }
-      to { background-position: 0 100vh; }
-    }
-
-    .layer.content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 3;
-    }
-
-    .layer.content img {
-      max-width: 300px;
-      border-radius: 20px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      color: white;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
-      margin-bottom: 15px;
-    }
-
-    iframe {
-      border-radius: 12px;
-    }
-  </style>
-</head>
-<body>
-  <!-- Caja de regalo -->
-  <div class="gift" id="giftBox">
-    <div class="lid"></div>
-    <div class="gift-text">🎁</div>
-  </div>
-
-  <!-- Escena Parallax -->
-  <div class="parallax-scene" id="scene">
-    <div class="layer bg" data-speed="0.2"></div>
-    <div class="layer hearts" data-speed="0.5"></div>
-    <div class="layer content" data-speed="1">
+    <div class="layer bg" data-speed="2"></div>
+    <div class="layer hearts" data-speed="4"></div>
+    <div class="layer content" data-speed="8">
       <h2>💖 Para nosotros 💖</h2>
       <img src="fotito.jpg" alt="Nuestra foto">
       <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/3H9GcHKKJyZ9TEOLKlJ1U5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -292,41 +152,14 @@
       }, 1000);
     });
 
-    // Parallax efecto con el mouse
+    // Parallax con el mouse
     document.addEventListener("mousemove", (e) => {
+      const x = (window.innerWidth / 2 - e.pageX) / 50;
+      const y = (window.innerHeight / 2 - e.pageY) / 50;
+
       document.querySelectorAll(".layer").forEach(layer => {
         const speed = layer.getAttribute("data-speed");
-        const x = (window.innerWidth - e.pageX*speed)/100;
-        const y = (window.innerHeight - e.pageY*speed)/100;
-        layer.style.transform = `translateX(${x}px) translateY(${y}px)`;
-      });
-    });
-  </script>
-</body>
-</html>
-
-    </div>
-  </div>
-
-  <script>
-    const giftBox = document.getElementById("giftBox");
-    const scene = document.getElementById("scene");
-
-    giftBox.addEventListener("click", () => {
-      giftBox.classList.add("open");
-      setTimeout(() => {
-        giftBox.style.display = "none";
-        scene.style.display = "block";
-      }, 1000);
-    });
-
-    // Parallax efecto con el mouse
-    document.addEventListener("mousemove", (e) => {
-      document.querySelectorAll(".layer").forEach(layer => {
-        const speed = layer.getAttribute("data-speed");
-        const x = (window.innerWidth - e.pageX*speed)/100;
-        const y = (window.innerHeight - e.pageY*speed)/100;
-        layer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        layer.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
       });
     });
   </script>
